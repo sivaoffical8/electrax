@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Electrax 2K26</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+body{
+  background:black;
+  color:white;
+  overflow-x:hidden;
+}
+
+/* 🎬 INTRO SCREEN */
+#intro{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+/* ✅ NEW LOGO */
+.logo{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:15px;
+}
+
+/* ⚡ bolts */
+.bolt{
+  font-size:50px;
+  color:gold;
+  opacity:0;
+}
+
+.left{
+  animation:leftBolt 0.8s forwards;
+}
+
+.right{
+  animation:rightBolt 0.8s forwards 0.4s;
+}
+
+@keyframes leftBolt{
+  from{transform:translateX(-120px);opacity:0;}
+  to{transform:translateX(0);opacity:1;}
+}
+
+@keyframes rightBolt{
+  from{transform:translateX(120px);opacity:0;}
+  to{transform:translateX(0);opacity:1;}
+}
+
+/* TEXT */
+.text{
+  text-align:center;
+}
+
+.text h1{
+  font-size:55px;
+  color:cyan;
+  text-shadow:0 0 25px cyan,0 0 50px blue;
+  opacity:0;
+  animation:pop 0.8s forwards 0.3s;
+}
+
+.text h2{
+  font-size:40px;
+  color:cyan;
+  opacity:0;
+  animation:pop 0.8s forwards 0.6s;
+}
+
+@keyframes pop{
+  from{transform:scale(0.5);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
+
+/* 🌌 Background */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+}
+
+/* 💎 Glass Card */
+.card{
+  backdrop-filter:blur(20px);
+  background:rgba(255,255,255,0.08);
+  border-radius:20px;
+  padding:30px;
+  max-width:600px;
+  margin:80px auto;
+  text-align:center;
+  box-shadow:0 0 40px rgba(0,255,255,0.5);
+}
+
+h1{
+  font-size:40px;
+  background:linear-gradient(to right,cyan,violet);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+/* ⏳ Countdown */
+#countdown{
+  margin:15px;
+  color:cyan;
+}
+
+/* 📸 Gallery */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  padding:20px;
+}
+
+.gallery img{
+  width:100%;
+  border-radius:10px;
+  transition:0.4s;
+}
+
+.gallery img:hover{
+  transform:scale(1.1);
+}
+
+/* 🔘 Button */
+button{
+  margin-top:15px;
+  padding:10px 20px;
+  border:none;
+  border-radius:25px;
+  background:cyan;
+  color:black;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎬 INTRO (UPDATED) -->
+<div id="intro">
+  <div class="logo">
+    <span class="bolt left">⚡</span>
+
+    <div class="text">
+      <h1>Electrax</h1>
+      <h2>2K26</h2>
+    </div>
+
+    <span class="bolt right">⚡</span>
+  </div>
+</div>
+
+<!-- 🌌 Background -->
+<canvas id="bg"></canvas>
+
+<div class="card">
+  <h1>Farewell Party 🎓</h1>
+  <p>Dr. B.R. Ambedkar University</p>
+  <p>April 22 | 10:00 AM</p>
+
+  <div id="countdown"></div>
+
+  <iframe width="100%" height="250"
+  src="https://www.youtube.com/embed/YOUR_VIDEO_ID">
+  </iframe>
+
+  <button onclick="playMusic()">🔊 Play Music</button>
+</div>
+
+<div class="gallery">
+  <img src="https://via.placeholder.com/150">
+  <img src="https://via.placeholder.com/150">
+  <img src="https://via.placeholder.com/150">
+</div>
+
+<audio id="bgm" loop>
+  <source src="your-music.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="introSound">
+  <source src="electric.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// intro effects
+setTimeout(()=>{
+  document.body.style.background="white";
+  document.getElementById("introSound").play().catch(()=>{});
+
+  if(navigator.vibrate){
+    navigator.vibrate([200,100,200]);
+  }
+
+  setTimeout(()=>{
+    document.body.style.background="black";
+  },100);
+},1200);
+
+// fade intro
+setTimeout(()=>{
+  let intro=document.getElementById("intro");
+  intro.style.opacity="0";
+  intro.style.transition="1s";
+
+  setTimeout(()=>{
+    intro.style.display="none";
+  },1000);
+},3000);
+
+// particles
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let p=[];
+for(let i=0;i<70;i++){
+  p.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    dx:(Math.random()-0.5)*2,
+    dy:(Math.random()-0.5)*2
+  });
+}
+
+function anim(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="cyan";
+
+  p.forEach(a=>{
+    ctx.beginPath();
+    ctx.arc(a.x,a.y,2,0,Math.PI*2);
+    ctx.fill();
+
+    a.x+=a.dx;
+    a.y+=a.dy;
+
+    if(a.x<0||a.x>canvas.width)a.dx*=-1;
+    if(a.y<0||a.y>canvas.height)a.dy*=-1;
+  });
+
+  requestAnimationFrame(anim);
+}
+anim();
+
+// countdown
+var eventDate=new Date("April 22, 2026 10:00:00").getTime();
+setInterval(()=>{
+  var now=new Date().getTime();
+  var diff=eventDate-now;
+
+  var d=Math.floor(diff/(1000*60*60*24));
+  var h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  var m=Math.floor((diff%(1000*60*60))/(1000*60));
+
+  document.getElementById("countdown").innerHTML=
+  "⏳ "+d+"d "+h+"h "+m+"m left";
+},1000);
+
+// music
+function playMusic(){
+  document.getElementById("bgm").play();
+}
+</script>
+
+</body>
+</html>
