@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Electrax 2K26</title>
 
 <style>
@@ -13,7 +15,7 @@ body{
   overflow-x:hidden;
 }
 
-/* 🎬 INTRO SCREEN */
+/* INTRO */
 #intro{
   position:fixed;
   width:100%;
@@ -25,28 +27,48 @@ body{
   z-index:9999;
 }
 
-/* ✅ NEW LOGO */
 .logo{
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:15px;
+  gap:10px;
+  text-align:center;
 }
 
-/* ⚡ bolts */
+/* TEXT CENTER FIX */
+.text{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+/* ALL CAPS */
+.text h1{
+  font-size:40px;
+  color:cyan;
+  text-transform:uppercase; /* ✅ CAPS */
+  text-shadow:0 0 20px cyan,0 0 40px blue;
+  opacity:0;
+  animation:pop 0.8s forwards 0.3s;
+}
+
+.text h2{
+  font-size:28px;
+  color:cyan;
+  text-transform:uppercase; /* ✅ CAPS */
+  opacity:0;
+  animation:pop 0.8s forwards 0.6s;
+}
+
 .bolt{
-  font-size:50px;
+  font-size:40px;
   color:gold;
   opacity:0;
 }
 
-.left{
-  animation:leftBolt 0.8s forwards;
-}
-
-.right{
-  animation:rightBolt 0.8s forwards 0.4s;
-}
+.left{animation:leftBolt 0.8s forwards;}
+.right{animation:rightBolt 0.8s forwards 0.4s;}
 
 @keyframes leftBolt{
   from{transform:translateX(-120px);opacity:0;}
@@ -58,21 +80,16 @@ body{
   to{transform:translateX(0);opacity:1;}
 }
 
-/* TEXT */
-.text{
-  text-align:center;
-}
-
 .text h1{
-  font-size:55px;
+  font-size:40px;
   color:cyan;
-  text-shadow:0 0 25px cyan,0 0 50px blue;
+  text-shadow:0 0 20px cyan,0 0 40px blue;
   opacity:0;
   animation:pop 0.8s forwards 0.3s;
 }
 
 .text h2{
-  font-size:40px;
+  font-size:28px;
   color:cyan;
   opacity:0;
   animation:pop 0.8s forwards 0.6s;
@@ -83,7 +100,7 @@ body{
   to{transform:scale(1);opacity:1;}
 }
 
-/* 🌌 Background */
+/* Background */
 canvas{
   position:fixed;
   top:0;
@@ -91,64 +108,83 @@ canvas{
   z-index:-1;
 }
 
-/* 💎 Glass Card */
+/* Card */
 .card{
   backdrop-filter:blur(20px);
   background:rgba(255,255,255,0.08);
   border-radius:20px;
-  padding:30px;
-  max-width:600px;
+  padding:25px;
+  width:90%;
+  max-width:400px;
   margin:80px auto;
   text-align:center;
   box-shadow:0 0 40px rgba(0,255,255,0.5);
 }
 
-h1{
-  font-size:40px;
+/* Heading */
+.card h1{
+  font-size:26px;
   background:linear-gradient(to right,cyan,violet);
   -webkit-background-clip:text;
   color:transparent;
 }
 
-/* ⏳ Countdown */
+/* Welcome Text ✨ */
+.welcome{
+  margin-top:10px;
+  font-size:15px;
+  color:#00ffff;
+  text-shadow:0 0 10px cyan;
+}
+
+/* Countdown */
 #countdown{
   margin:15px;
   color:cyan;
+  font-size:14px;
 }
 
-/* 📸 Gallery */
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  padding:20px;
-}
-
-.gallery img{
+/* Video */
+iframe{
   width:100%;
-  border-radius:10px;
-  transition:0.4s;
+  height:200px;
+  border-radius:12px;
+  margin-top:10px;
+  box-shadow:0 0 15px rgba(0,255,255,0.3);
 }
 
-.gallery img:hover{
-  transform:scale(1.1);
-}
-
-/* 🔘 Button */
+/* Button */
 button{
   margin-top:15px;
   padding:10px 20px;
   border:none;
   border-radius:25px;
-  background:cyan;
+  background:linear-gradient(to right,cyan,violet);
   color:black;
+  font-size:14px;
+  cursor:pointer;
+  box-shadow:0 0 15px cyan;
+}
+button:hover{
+  transform:scale(1.05);
+}
+#intro{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center; /* ✅ vertical center */
+  background:black;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🎬 INTRO (UPDATED) -->
+<!-- INTRO -->
 <div id="intro">
   <div class="logo">
     <span class="bolt left">⚡</span>
@@ -162,27 +198,27 @@ button{
   </div>
 </div>
 
-<!-- 🌌 Background -->
+<!-- Background -->
 <canvas id="bg"></canvas>
 
 <div class="card">
   <h1>Farewell Party 🎓</h1>
+
+  <!-- ✅ NEW WELCOME TEXT -->
+  <p class="welcome">🎉 Welcome to Farewell Party 🎉</p>
+
   <p>Dr. B.R. Ambedkar University</p>
   <p>April 22 | 10:00 AM</p>
 
   <div id="countdown"></div>
 
-  <iframe width="100%" height="250"
-  src="https://www.youtube.com/embed/YOUR_VIDEO_ID">
+  <!-- VIDEO -->
+  <iframe 
+    src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+    allowfullscreen>
   </iframe>
 
   <button onclick="playMusic()">🔊 Play Music</button>
-</div>
-
-<div class="gallery">
-  <img src="https://via.placeholder.com/150">
-  <img src="https://via.placeholder.com/150">
-  <img src="https://via.placeholder.com/150">
 </div>
 
 <audio id="bgm" loop>
@@ -194,36 +230,22 @@ button{
 </audio>
 
 <script>
-// intro effects
+// intro
 setTimeout(()=>{
-  document.body.style.background="white";
-  document.getElementById("introSound").play().catch(()=>{});
-
-  if(navigator.vibrate){
-    navigator.vibrate([200,100,200]);
-  }
-
-  setTimeout(()=>{
-    document.body.style.background="black";
-  },100);
-},1200);
-
-// fade intro
-setTimeout(()=>{
-  let intro=document.getElementById("intro");
-  intro.style.opacity="0";
-  intro.style.transition="1s";
-
-  setTimeout(()=>{
-    intro.style.display="none";
-  },1000);
+  document.getElementById("intro").style.opacity="0";
+  setTimeout(()=>{document.getElementById("intro").style.display="none";},1000);
 },3000);
 
 // particles
 const canvas=document.getElementById("bg");
 const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+
+function resize(){
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+}
+resize();
+window.addEventListener("resize",resize);
 
 let p=[];
 for(let i=0;i<70;i++){
